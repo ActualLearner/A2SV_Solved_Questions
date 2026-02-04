@@ -1,0 +1,13 @@
+class Solution:
+    def isCovered(self, ranges: List[List[int]], left: int, right: int) -> bool:
+        num = left
+
+        while num <= right:
+            for interval in ranges:
+                if num >= interval[0] and num <= interval[1]:
+                    num += 1
+                    break
+            else:
+                return False
+        
+        return True
