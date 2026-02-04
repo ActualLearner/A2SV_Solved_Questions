@@ -1,0 +1,20 @@
+class Solution:    
+    def findUnion(self, a, b):
+        # 
+        # input: two arrays
+        # output: array
+        # 
+        # Problem: you're given two arrays, 
+        # return their union/concatentation
+        
+        # - Order of combining them doesn't matter
+        #
+        # Approach 1
+        # - Concatentate both arrays
+        # - use list & set to remove duplicate
+        # 
+        # time => O(n) since set & list process each element
+        # space => O(1) since we're not using variables
+        #
+        
+        return list(set(a + b))
