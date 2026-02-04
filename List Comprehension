@@ -15,21 +15,8 @@ if __name__ == '__main__':
     # find all possible combinations of numbers i, j, k
     # filter those combinations so their sum isn't n
     #
-    #
-    #
-    #
     
-    ans = []
-    
-    possible_i = [a for a in range(x + 1)]
-    possible_j = [a for a in range(y + 1)]
-    possible_k = [a for a in range(z + 1)]
-    
-    for i in possible_i:
-        for j in possible_j:
-            for k in possible_k:
-                if i + j + k != n:
-                    ans.append([i, j, k])
+    ans = [[i, j, k] for i in range(x + 1) for j in range (y + 1) for k in range(z + 1) if i + j + k != n]
     
     print(ans)
     
