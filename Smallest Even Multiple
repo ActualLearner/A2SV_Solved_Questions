@@ -1,0 +1,7 @@
+class Solution:
+    def smallestEvenMultiple(self, n: int) -> int:
+        i = 1
+        while i <= 150:
+            if (n * i) % 2 == 0:
+                return n * i
+            i += 1
