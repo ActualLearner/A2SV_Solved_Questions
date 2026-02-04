@@ -1,0 +1,57 @@
+#User function Template for python3
+
+
+#
+# input: two arrays
+# output: bool 
+#
+#
+# problem: given two arrays, determine if b is a subset of a
+# - b is a subset of a means: every element of b is an element
+# of a, but not necessarily vice versa.
+#
+# EDGECASES:
+# -if b has duplicates, then a must have them for b to be a subset of a.
+#
+# Approach 1
+# - Initialize a set of a
+# - Loop through each element of b
+# - Lookup that element in set a
+# - If that element isn't found, return False.
+# - At the end, return True
+#
+#
+# Approach 2
+# - Initialize two hashmaps
+# - Count each elements freq in both arrays
+# - Loop through each key in hashmap_b
+# - Compare the key's value in hashmap_b & hashmap_a
+# - If the value in hashmap_b > value in hashmap_a return false
+# - At the end, return True
+#
+# time => O(n) since we're looping once for each hashmap
+# space => O(n) since we're using two hashmaps
+# space may be less than O(n) because we are not adding duplicates 
+#
+
+
+class Solution:
+    #Function to check if a is a subset of b.
+    def isSubset(self, a, b):
+        # Your code here
+        hashmap_a = {}
+        hashmap_b = {}
+        
+        for num in a:
+            hashmap_a[num] = hashmap_a.get(num, 0) + 1
+        
+        for num in b:
+            hashmap_b[num] = hashmap_b.get(num, 0) + 1
+            
+        for key in hashmap_b:
+            if hashmap_b[key] > hashmap_a[key]:
+                return False
+        
+        return True
+    
+    
