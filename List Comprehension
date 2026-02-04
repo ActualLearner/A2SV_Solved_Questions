@@ -1,0 +1,35 @@
+if __name__ == '__main__':
+    x = int(input())
+    y = int(input())
+    z = int(input())
+    n = int(input())
+    #
+    # Input: 4 integers: x, y, z, n
+    # Output: list 
+    #
+    # Problem: find all possible combinations of 3 numbers
+    # ranging from 0 to x, 0 to y, and 0 to z, such that
+    # their sum is not n
+    #
+    # Approach:
+    # find all possible combinations of numbers i, j, k
+    # filter those combinations so their sum isn't n
+    #
+    #
+    #
+    #
+    
+    ans = []
+    
+    possible_i = [a for a in range(x + 1)]
+    possible_j = [a for a in range(y + 1)]
+    possible_k = [a for a in range(z + 1)]
+    
+    for i in possible_i:
+        for j in possible_j:
+            for k in possible_k:
+                if i + j + k != n:
+                    ans.append([i, j, k])
+    
+    print(ans)
+    
