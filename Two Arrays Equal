@@ -1,0 +1,44 @@
+class Solution:
+    def checkEqual(self, a, b) -> bool:
+        #
+        # input: two array of equal size
+        # output: bool
+        # edgecases: d/t lengths, dupicates
+        #
+        # Problem: you're given two arrays of equal size. If the arrays
+        # are the equal, return True.
+        # - eqqual arrays means having the same elements, and the same
+        # frequency of those elements too
+        # 
+        # Approach 1
+        # use a hashmap to count each elements frequency and 
+        # compare the two arrays.
+        # - Initialize a hashmap1
+        # - Count each elements freq in the hashmap
+        # - Initialize hashmap2
+        # - count each elements freq in hashmap2
+        # - return hashmap 1 == hashmap 2
+        #
+        # time = O(n) since we're using two loops to count freq
+        # space = O(n) since we're using two hashmaps
+        #
+        # space maybe be less than O(n) because it only stores the 
+        # unique elemens and discards the duplicates
+        #
+        #
+        # Approach 2
+        # 
+        #
+        
+        
+        hashmap1 = {}
+        hashmap2 = {}
+        
+        for i, num in enumerate(a):
+            hashmap1[num] = hashmap1.get(num, 0) + 1
+            
+        for i, num in enumerate(b):
+            hashmap2[num] = hashmap2.get(num, 0) + 1
+        
+        return hashmap1 == hashmap2
+        
