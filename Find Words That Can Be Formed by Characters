@@ -1,0 +1,14 @@
+class Solution:
+    def countCharacters(self, words: List[str], chars: str) -> int:
+        chars_count = Counter(chars)
+        ans = 0
+
+        for word in words:
+            curr = Counter(word)
+            for key, value in curr.items():
+                if key not in chars_count or value > chars_count[key]:
+                    break
+            else:
+                ans += len(word)
+
+        return ans
