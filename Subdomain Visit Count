@@ -1,0 +1,14 @@
+class Solution:
+    def subdomainVisits(self, cpdomains: List[str]) -> List[str]:
+        hashmap = {}
+        
+        for domains in cpdomains: # O(n)
+            visits, subdomains = domains.split()
+            subdomains = subdomains.split(".")
+
+            for i in range(len(subdomains)):
+                subdomain_name = ".".join(subdomains[i:])
+
+                hashmap[subdomain_name] = hashmap.get(subdomain_name, 0) + int(visits)
+
+        return [f"{value} {key}" for key, value in hashmap.items()]
