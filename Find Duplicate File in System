@@ -1,0 +1,22 @@
+class Solution:
+    def findDuplicate(self, paths: List[str]) -> List[List[str]]:
+        hashmap = {}
+
+        for path in paths:
+            path_list = path.split()
+            directory = path_list[0]
+            files = path_list[1:]
+
+            for f in files:
+                i = f.find("(")
+                j = f.find(")")
+
+                content = f[i + 1:j]
+                file_name = f[0:i]
+                
+                if content in hashmap:
+                    hashmap[content].append(f"{directory}/{file_name}")
+                else:
+                    hashmap[content] = [f"{directory}/{file_name}"]
+        
+        return [x for x in hashmap.values() if len(x) > 1]
