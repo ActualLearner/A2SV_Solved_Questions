@@ -1,12 +1,18 @@
 class Solution:
     def countCharacters(self, words: List[str], chars: str) -> int:
-        chars_count = Counter(chars)
+        chars_count = [0 for _ in range(26)]
         ans = 0
 
+        for c in chars:
+            chars_count[ord(c) - ord('a')] += 1
+
         for word in words:
-            curr = Counter(word)
-            for key, value in curr.items():
-                if key not in chars_count or value > chars_count[key]:
+            curr = [0 for _ in range(26)]
+            for c in word:
+                curr[ord(c) - ord('a')] += 1
+            
+            for i in range(26):
+                if curr[i] > chars_count[i]:
                     break
             else:
                 ans += len(word)
