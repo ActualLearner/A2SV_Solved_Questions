@@ -1,18 +1,18 @@
 class Solution:
     def findRestaurant(self, list1: List[str], list2: List[str]) -> List[str]:
+        ans = []
         commonString = {}
+        list2_dict = {string:i for i, string in enumerate(list2)}
 
         for i, word in enumerate(list1):
-            for j, word2 in enumerate(list2):
-                if word == word2:
-                    commonString[word] = i + j
+            if word in list2_dict:
+                commonString[word] = i + list2_dict[word]
         
         # find the key with the least value
-        keys = list(commonString.keys())
-        ans = [keys[0]]
-
         for key, value in commonString.items():
-            if value < commonString[ans[-1]]:
+            if not ans:
+                ans.append(key)
+            elif value < commonString[ans[-1]]:
                 ans[-1] = key
             elif value == commonString[ans[-1]] and ans[-1] != key:
                 ans.append(key)
