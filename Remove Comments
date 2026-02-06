@@ -1,0 +1,35 @@
+class Solution:
+    def removeComments(self, source: List[str]) -> List[str]:
+        in_block = False
+        newline = ""
+        i = 0
+        ans = []
+
+        while i < len(source):
+            line = source[i]
+            j = 0
+
+            while j < len(line):
+                pair = line[j:j+2]
+
+                if pair == "//" and not in_block:
+                    break
+                elif pair == "/*" and not in_block:
+                    in_block = True
+                    j += 2
+                elif pair == "*/" and in_block:
+                    in_block = False
+                    j += 2
+                elif not in_block:
+                    newline += line[j]
+                    j += 1
+                else:
+                    j += 1
+
+            if not in_block and newline:
+                ans.append(newline)
+                newline = ""
+
+            i += 1
+
+        return [x for x in ans if x]
