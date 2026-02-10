@@ -1,0 +1,12 @@
+class Solution:
+    def restoreString(self, s: str, indices: List[int]) -> str:
+        string = ["" for _ in range(len(s))]
+        hashmap = {}
+
+        for char_index, char_position in enumerate(indices):
+            hashmap[char_position] = s[char_index] 
+
+        for i in range(len(s)):
+            string[i] = hashmap[i]
+
+        return "".join(string)
