@@ -1,0 +1,17 @@
+class Solution:
+    def isHappy(self, n: int) -> bool:
+        seen = set()
+        while n != 1:
+            sum_ = 0
+            for char in str(n):
+                num = int(char)
+                sum_ += (num * num)
+            
+            n = sum_
+
+            if n in seen:
+                return False
+            else:
+                seen.add(n)
+        
+        return True
