@@ -1,0 +1,14 @@
+class Solution:
+    def minSteps(self, s: str, t: str) -> int:
+        similar = 0
+        count_s = Counter(s)
+        count_t = Counter(t)
+
+        for key, value in count_s.items():
+            if key in count_t:
+                if value == count_t[key]:
+                    similar += value
+                else:
+                    similar += min(value, count_t[key])
+        
+        return len(s) - similar
