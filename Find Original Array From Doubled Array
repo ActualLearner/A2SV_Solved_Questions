@@ -1,0 +1,22 @@
+class Solution:
+    def findOriginalArray(self, changed: List[int]) -> List[int]:
+        result = []
+        changed.sort()
+        hashmap = Counter(changed)
+
+        if len(changed) % 2 != 0:
+            return []
+
+        for num in changed:
+            double_num = num * 2
+
+            if hashmap[num] <= 0:
+                continue
+            elif double_num not in hashmap or hashmap[double_num] <= 0:
+                return []
+            
+            hashmap[num] -= 1
+            hashmap[double_num] -= 1
+            result.append(num)
+        
+        return result
