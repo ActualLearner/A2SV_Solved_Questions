@@ -1,0 +1,24 @@
+class Solution:
+    def minimumSwap(self, s1: str, s2: str) -> int:
+        combined = s1 + s2
+        ans = 0
+        
+        if combined.count("x") % 2 != 0 or combined.count("y") % 2 != 0:
+            return -1
+
+        seen = set()
+        for i in range(len(s1)):
+            if s1[i] == s2[i]:
+                continue
+
+            pair = s1[i] + s2[i]
+
+            if pair in seen:
+                seen.remove(pair)
+                ans += 1
+            else:    
+                seen.add(s1[i] + s2[i])
+        
+        ans += len(seen)
+            
+        return ans
