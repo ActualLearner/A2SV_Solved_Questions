@@ -1,0 +1,18 @@
+class Solution:
+    def closeStrings(self, word1: str, word2: str) -> bool:
+        set1, set2 = set(word1), set(word2)
+        common = set(set1).intersection(set2)
+
+        if len(word1) != len(word2) or len(common) <= len(set1) // 2:
+            return False
+
+        count1, count2 = Counter(word1), Counter(word2)
+        freq1, freq2 = {}, {}
+
+        for key, value in count1.items():
+            freq1[value] = freq1.get(value, 0) + 1
+
+        for key, value in count2.items():
+            freq2[value] = freq2.get(value, 0) + 1
+
+        return freq1 == freq2
