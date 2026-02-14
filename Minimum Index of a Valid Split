@@ -1,0 +1,25 @@
+class Solution:
+    def minimumIndex(self, nums: List[int]) -> int:
+        count = 0
+        dominant = 0
+        
+        for num in nums:
+            if count == 0:
+                dominant = num
+                
+            if num == dominant:
+                count += 1
+            else:
+                count -= 1
+
+        freq = nums.count(dominant)
+        count = 0
+
+        for i, num in enumerate(nums):
+            if num == dominant:
+                count += 1
+
+            if count > (i + 1) / 2 and freq - count > (len(nums) - (i + 1)) / 2:
+                return i
+
+        return -1
