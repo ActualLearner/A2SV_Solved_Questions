@@ -1,0 +1,44 @@
+t = int(input())
+
+for _ in range(t):
+    n, x, k = list(map(int, input().split()))
+    s = input()
+
+    cumulative = [0 for _ in range(n)]
+    cumulative_dict = {}
+    ans = 0
+
+    for i, char in enumerate(s):
+        num = 1 if char == "R" else -1
+        if i == 0:
+            cumulative[i] = num
+        else:
+            cumulative[i] = cumulative[i - 1] + num
+
+        if cumulative[i] in cumulative_dict:
+            cumulative_dict[cumulative[i]].append(i)
+        else:
+            cumulative_dict[cumulative[i]] = [i]
+
+    # check if it's a zero loopback
+    # if there's a -x before k ends
+    # if there's x is zero and there's a zero before k ends
+    #
+    #
+    #
+    if -x in cumulative_dict and cumulative_dict[-x][0] + 1 <= k:
+        complement = cumulative_dict[-x][0] + 1
+        k -= complement
+        x = 0
+        ans += 1
+
+    if x == 0 and 0 in cumulative_dict and cumulative_dict[0][0]:
+        ans += (k // (cumulative_dict[0][0] + 1))
+        k = 0
+
+    # if there's no zero loop we simulate
+    if k > 0:
+        x += cumulative[min(k - 1, len(s) - 1)]
+        k = 0
+
+    print(ans)
