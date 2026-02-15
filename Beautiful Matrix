@@ -1,0 +1,13 @@
+def solve():
+    grid = [input().replace(" ", "") for _ in range(5)]
+
+    for i in range(5):
+        for j in range(5):
+            if grid[i][j] == "1":
+                print(abs(2 - i) + abs(2 - j))
+                break
+        else:
+            continue
+        break
+
+solve()
