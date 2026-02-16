@@ -1,0 +1,56 @@
+class Solution:
+    def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
+        ans = [matrix[0][0]]
+        m, n = len(matrix), len(matrix[0])
+        i, j = 0, 0
+        l, r = -1, n
+        lower, upper = m, 0
+
+        while len(ans) < m * n:
+            # condition 1: going right
+            while j < r - 1:
+                if len(ans) == m*n:
+                    break
+                j += 1
+                ans.append(matrix[i][j])
+            else:
+                r -= 1
+
+            # condition 3: going down
+            while i < lower - 1:
+                if len(ans) == m*n:
+                    break
+                i += 1
+                ans.append(matrix[i][j])
+            else:
+                lower -= 1
+
+            # condition 4: going left
+            while j > l + 1:
+                if len(ans) == m*n:
+                    break
+                j -= 1
+                ans.append(matrix[i][j])
+            else:
+                l += 1
+
+            # condition 2: going up
+            while i > upper + 1:
+                if len(ans) == m*n:
+                    break
+                i -= 1
+                ans.append(matrix[i][j])
+            else:
+                upper += 1
+
+            print(i, j)
+            # 4 conditions
+            # if we're at l, upper:
+            # keep increment j until you reach r
+            # if we're at l, lower:
+            # keep decrementing i until you reach upper
+            # if we're at r, upper:
+            # keep incrementing i until you reach lower
+            # if we're at r, lower:
+            # keep decrementing j until you reach l
+        return ans
