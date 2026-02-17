@@ -1,0 +1,17 @@
+class Solution:
+    def wordPattern(self, pattern: str, s: str) -> bool:
+        pattern_list = list(pattern)
+        string_list = s.split(" ")
+
+        if len(pattern_list) != len(string_list) or len(set(pattern_list)) != len(set(string_list)):
+            return False
+        
+        hashmap = {}
+        for i, char in enumerate(pattern):
+            if char in hashmap:
+                if hashmap[char] != string_list[i]:
+                    return False
+            else:
+                hashmap[char] = string_list[i]
+        
+        return True
