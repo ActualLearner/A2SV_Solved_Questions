@@ -1,0 +1,29 @@
+class Solution:
+    def strStr(self, haystack: str, needle: str) -> int:
+        # approach 1:
+        # Use a .find and just return that. it'll alsp handle the -1 
+        #
+        # Works but we need to use 2 ptrs
+        #
+        #
+        # Approach 2:
+        # Start with 2 ptrs on both strings, i and j
+        # If
+        #
+        #
+        #
+        i, j = 0, 0
+
+        while i < len(haystack):
+            if j == len(needle):
+                return i - len(needle)
+            elif haystack[i] == needle[j]:
+                i += 1
+                j += 1
+            elif haystack[i] != needle[j]:
+                i -= (j - 1)
+                j = 0
+
+        if j == len(needle):
+            return i - len(needle)
+        return -1
