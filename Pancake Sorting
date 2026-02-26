@@ -1,0 +1,21 @@
+class Solution:
+    def pancakeSort(self, arr: List[int]) -> List[int]:
+        ans = []
+        n = len(arr)
+        end = n
+        
+        while n > 0:
+            index = arr.index(n)
+
+            if index == n - 1:
+                n -= 1
+                continue
+            elif index != 0:
+                arr[:index+1] = arr[:index+1][::-1]
+                ans.append(index + 1)
+
+            arr[:n] = arr[:n][::-1]
+            ans.append(n)
+            n -= 1
+        
+        return ans
