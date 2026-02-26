@@ -1,0 +1,47 @@
+tc = int(input())
+
+
+def solve(s, t):
+    counter_s = {}
+    counter_t = {}
+    ans = []
+
+    for char in s:
+        counter_s[char] = counter_s.get(char, 0) + 1
+
+    for char in t:
+        counter_t[char] = counter_t.get(char, 0) + 1
+
+    for key, value in counter_s.items():
+        if key not in counter_t or value > counter_t[key]:
+            return "Impossible"
+        else:
+            counter_t[key] -= value
+
+    new_t = []
+    for key, value in counter_t.items():
+        if value > 0:
+            new_t.append(key * value)
+
+    new_t.sort()
+
+    i, j = 0, 0
+    while i < len(s) and j < len(new_t):
+        if s[i] <= new_t[j]:
+            ans.append(s[i])
+            i += 1
+        else:
+            ans.append(new_t[j])
+            j += 1
+
+    ans.extend(new_t[j:])
+    ans.extend(s[i:])
+
+    return "".join(ans)
+
+
+for _ in range(tc):
+    s = input()
+    t = input()
+
+    print(solve(s, t))
