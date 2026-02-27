@@ -1,0 +1,17 @@
+class Solution:
+    def findMinArrowShots(self, points: List[List[int]]) -> int:
+        points.sort(key=lambda x: x[1])
+        res = 0
+        prev_range = []
+
+        for p in points:
+            if not prev_range:
+                prev_range = p
+                res += 1
+            elif prev_range[1] >= p[0]:
+                prev_range = [max(p[0], prev_range[0]), min(p[1], prev_range[1])]
+            else:
+                prev_range = p
+                res += 1
+        
+        return res
