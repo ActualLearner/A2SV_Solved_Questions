@@ -1,0 +1,9 @@
+import sys
+data = sys.stdin.read().split()
+data = list(map(int, data))
+n = data[0]
+x = data[1:n+1]
+x.sort()
+
+
+print(x[(data[0] - 1) // 2])
