@@ -6,20 +6,12 @@ for _ in range(t):
     N = int(input())
     nums = list(map(int, input().split()))
 
-    max_diff = 0
-    for i in range(N - 1):
-        max_diff += abs(nums[i] - nums[i + 1])
+    ans = [nums[0]]
+    for i in range(1, N - 1):
+        increasing = nums[i - 1] < nums[i] < nums[i + 1]
+        decreasing = nums[i - 1] > nums[i] > nums[i + 1]
 
-    ans = []
-    for i in range(N - 1):
-        curr_diff = max_diff
-        curr_diff -= abs(nums[i] - nums[i + 1])
-
-        if i != 0:
-            curr_diff -= abs(nums[i - 1] - nums[i])
-            curr_diff += abs(nums[i - 1] - nums[i + 1])
-
-        if curr_diff == max_diff:
+        if increasing or decreasing:
             continue
         else:
             ans.append(nums[i])
