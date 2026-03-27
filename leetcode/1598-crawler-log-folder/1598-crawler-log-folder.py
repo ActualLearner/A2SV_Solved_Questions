@@ -1,14 +1,13 @@
 class Solution:
     def minOperations(self, logs: List[str]) -> int:
-        depth = 0
+        ans = 0
 
         for log in logs:
-            if log == "./":
+            if log == "../":
+                ans = max(0, ans - 1)
+            elif log == "./":
                 continue
-            elif log == "../":
-                depth = max(0, depth - 1)
             else:
-                depth += 1
+                ans += 1
         
-        return depth
-            
+        return ans
