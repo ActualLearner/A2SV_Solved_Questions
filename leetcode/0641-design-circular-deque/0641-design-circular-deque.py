@@ -1,109 +1,64 @@
-class Node:
-    def __init__(self, val=-1, next=None, prev=None):
-        self.val = val
-        self.next = next
-        self.prev = prev
-
 class MyCircularDeque:
 
     def __init__(self, k: int):
-        self.head = None
-        self.tail = None
+        self.list = [-1] * k
+        self.front = 0
+        self.rear = k - 1
         self.count = 0
-        self.k = k
 
     def insertFront(self, value: int) -> bool:
-        if self.count == self.k:
+        index_front = (self.front - 1) % len(self.list)
+        if self.list[index_front] != -1:
             return False
-
-        curr = Node(value)
-
-        if not self.head:
-            self.head = curr
         
-        if not self.tail:
-            self.tail = curr
-            self.count += 1
-            return True
-
-        self.tail.next = curr
-        curr.prev = self.tail
-        self.tail = curr
+        self.list[index_front] = value
+        self.front -= 1
         self.count += 1
-
         return True
 
     def insertLast(self, value: int) -> bool:
-        if self.count == self.k:
+        index_rear = (self.rear + 1) % len(self.list)
+        if self.list[index_rear] != -1:
             return False
-
-        curr = Node(value)
-        if not self.tail:
-            self.tail = curr
         
-        if not self.head:
-            self.head = curr
-            self.count += 1
-            return True
-
-        self.head.prev = curr
-        curr.next = self.head
-        self.head = curr
+        self.list[index_rear] = value
+        self.rear += 1
         self.count += 1
-
         return True
 
     def deleteFront(self) -> bool:
-        if not self.tail:
+        index = self.front % len(self.list)
+        if self.list[index] == -1:
             return False
         
-        if self.tail == self.head:
-            self.tail = None
-            self.head = None
-            self.count -= 1
-            return True
-
-        prev = self.tail.prev
-        self.tail = prev
+        self.list[index] = -1
+        self.front += 1
         self.count -= 1
         return True
 
     def deleteLast(self) -> bool:
-        if not self.head:
+        index = self.rear % len(self.list)
+        if self.list[index] == -1:
             return False
         
-        if self.head == self.tail:
-            self.head = None
-            self.tail = None
-            self.count -= 1
-            return True
-        
-        next_ = self.head.next
-        self.head = next_
+        self.list[index] = -1
+        self.rear -= 1
         self.count -= 1
         return True
 
     def getFront(self) -> int:
-        if not self.tail:
-            return -1
-        
-        return self.tail.val
+        return self.list[self.front % len(self.list)]
 
     def getRear(self) -> int:
-        if not self.head:
-            return -1
+        return self.list[self.rear % len(self.list)]
         
-        return self.head.val
 
     def isEmpty(self) -> bool:
-        if not self.head and not self.tail:
-            return True
-        
-        return False
+        return self.count == 0
 
     def isFull(self) -> bool:
-        return self.count == self.k
-        
+        return self.count == len(self.list)
+
 
 # Your MyCircularDeque object will be instantiated and called as such:
 # obj = MyCircularDeque(k)
