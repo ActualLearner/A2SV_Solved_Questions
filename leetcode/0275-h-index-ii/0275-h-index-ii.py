@@ -2,7 +2,7 @@ class Solution:
     def hIndex(self, citations: List[int]) -> int:
         n = len(citations)
 
-        low, high = 0, n - 1
+        low, high = 0, n
         while low < high:
             mid = (low + high) // 2
 
@@ -11,4 +11,4 @@ class Solution:
             else:
                 low = mid + 1
 
-        return n - high if citations[high] != 0 else 0
+        return n - high
