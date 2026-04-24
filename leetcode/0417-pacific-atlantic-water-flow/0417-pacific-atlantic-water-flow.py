@@ -1,43 +1,24 @@
 class Solution:
     def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
         rows, cols = len(heights), len(heights[0])
-        ans = []
-
+        pac_visited = set()
+        atl_visited = set()
         directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
-        visited = set()
-        
-        def dfs(i, j, path):
-            nonlocal visited
-            nonlocal directions
-            nonlocal rows
-            nonlocal cols
 
-            if all(path) or (i, j) in visited:
-                return
-            
+        def dfs(i, j, visited):
             visited.add((i, j))
 
             for d in directions:
                 u, v = i + d[0], j + d[1]
+                if 0 <= u < rows and 0 <= v < cols and (u, v) not in visited and heights[u][v] >= heights[i][j]:
+                    dfs(u, v, visited)
 
-                if u < 0 or v < 0:
-                    path[0] = True
-                if u == rows or v == cols:
-                    path[1] = True
-                
-                if all(path):
-                    return path
-                elif 0 <= u < rows and 0 <= v < cols and heights[u][v] <= heights[i][j]:
-                    dfs(u, v, path)
-            
-            return path
-
+        for c in range(cols):
+            dfs(0, c, pac_visited)
+            dfs(rows - 1, c, atl_visited)
         
-        for i in range(len(heights)):
-            for j in range(len(heights[0])):
-                if all(dfs(i, j, [False, False])):
-                    ans.append([i, j])
-                
-                visited.clear()
+        for r in range(rows):
+            dfs(r, 0, pac_visited)
+            dfs(r, cols - 1, atl_visited)
         
-        return ans
+        return list(pac_visited & atl_visited)
