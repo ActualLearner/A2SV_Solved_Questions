@@ -1,57 +1,42 @@
 class Solution:
     def removeInvalidParentheses(self, s: str) -> List[str]:
         n = len(s)
-        stack = []
-        bad = {"(": 0, ")": 0}
+        left_b, right_b = 0, 0
 
         for char in s:
             if char == "(":
-                stack.append(char)
+                left_b += 1
             elif char == ")":
-                while stack and stack[-1] != "(":
-                    bad[stack.pop()] += 1
-
-                if not stack:
-                    bad[char] += 1
+                if left_b > 0:
+                    left_b -= 1
                 else:
-                    stack.pop()
-        
-        for elem in stack:
-            bad[elem] += 1
+                    right_b += 1
 
-        def isValid(arr):
-            stack = []
-            for char in arr:
-                if char == "(":
-                    stack.append(char)
-                elif char == ")":
-                    if not stack or stack[-1] != "(":
-                        return False
-                    
-                    stack.pop()
-            
-            if stack:
-                return False
-            
-            return True
 
         ans = set()
-        def bruteforce(path, i, bad):
+        def bruteforce(path, i, left, right, count):
             if i == n:
-                if bad["("] + bad[")"] <= 0 and isValid(path):
+                if left + right + count == 0:
                     ans.add("".join(path))
-                
+                return 
+
+            if s[i] == "(" and left > 0:                    
+                bruteforce(path, i + 1, left - 1, right, count)
+            elif s[i] == ")" and right > 0:
+                bruteforce(path, i + 1, left, right - 1, count)
+            
+            if s[i] == "(":
+                count += 1
+            elif s[i] == ")":
+                count -= 1
+            
+            if count < 0:
                 return
-            
-            if s[i] in bad and bad[s[i]] > 0:
-                bad[s[i]] -= 1
-                bruteforce(path, i + 1, bad)
-                bad[s[i]] += 1
-            
+                
             path.append(s[i])
-            bruteforce(path, i + 1, bad)
+            bruteforce(path, i + 1, left, right, count)
             path.pop()
 
 
-        bruteforce([], 0, bad)
+        bruteforce([], 0, left_b, right_b, 0)
         return list(ans)
