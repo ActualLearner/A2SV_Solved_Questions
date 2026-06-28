@@ -1,20 +1,12 @@
 class Solution:
     def findTargetSumWays(self, nums: List[int], target: int) -> int:
         N = len(nums)
-        cache = {}
+        dp = [defaultdict(int) for _ in range(N + 1)]
+        dp[0][0] = 1
 
-        def dfs(val, i):
-            if i == N:
-                return 1 if val == target else 0
-            
-            if (val + nums[i], i + 1) not in cache:
-                cache[(val + nums[i], i + 1)] = dfs(val + nums[i], i + 1)
-
-            if (val - nums[i], i + 1) not in cache:
-                cache[(val - nums[i], i + 1)] = dfs(val - nums[i], i + 1)
-
-            left = cache[(val + nums[i], i + 1)]
-            right = cache[(val - nums[i], i + 1)]
-            return left + right
+        for i in range(N):
+            for cur_sum, count in dp[i].items():
+                dp[i + 1][cur_sum + nums[i]] += count
+                dp[i + 1][cur_sum - nums[i]] += count
         
-        return dfs(0, 0)
+        return dp[-1][target]
