@@ -1,24 +1,22 @@
 class Solution:
     def getAncestors(self, n: int, edges: List[List[int]]) -> List[List[int]]:
         adj = defaultdict(list)
-        indegree = [0] * n
-        answer = [set() for _ in range(n)]
+        indeg = [0] * n
+        ancestors = [set() for _ in range(n)]
 
         for u, v in edges:
             adj[u].append(v)
-            indegree[v] += 1
+            indeg[v] += 1
         
-        q = deque([i for i in range(n) if indegree[i] == 0])
-        while q:
-            curr = q.popleft()
-            for nei in adj[curr]:
-                answer[nei].add(curr)
-                answer[nei].update(answer[curr])
+        queue = deque([i for i in range(n) if indeg[i] == 0])
+        while queue:
+            curr = queue.popleft()
+            for v in adj[curr]:
+                ancestors[v].add(curr)
+                ancestors[v].update(ancestors[curr])
+                indeg[v] -= 1
 
-                indegree[nei] -= 1
-
-                if indegree[nei] == 0:
-                    q.append(nei)
-            
-        ans = [sorted(nums) for nums in answer]
-        return ans
+                if indeg[v] == 0:
+                    queue.append(v)
+        
+        return [sorted(nums) for nums in ancestors]
