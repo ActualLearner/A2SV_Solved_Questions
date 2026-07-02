@@ -1,33 +1,31 @@
 class Solution:
     def solveNQueens(self, n: int) -> List[List[str]]:
-        results = []
-        cols = set()
-        posDiag = set()
-        negDiag = set()
+        ans = []
+        board = [["." for _ in range(n)] for _ in range(n)]
+        cols = [0] * n
+        posDiag = [False] * (2*n - 1)
+        negDiag = [False] * (2*n - 1)
 
-        path = [["."] * (n) for _ in range(n)]
-
-        def backtrack(r):
-            if r == n:
-                results.append(["".join(row) for row in path])
+        def backtrack(i, board):
+            if i == n:
+                ans.append(["".join(x) for x in board])
                 return
-
-            for c in range(n):
-
-                if c in cols or r - c in negDiag or r + c in posDiag:
+            
+            for j in range(n):
+                if cols[j] or posDiag[i + j] or negDiag[i - j]:
                     continue
+                
+                cols[j] = True
+                posDiag[i + j] = True
+                negDiag[i - j] = True
+                board[i][j] = "Q"
 
-                path[r][c] = "Q"
-                cols.add(c)
-                negDiag.add(r - c)
-                posDiag.add(r + c)
+                backtrack(i + 1, board)
 
-                backtrack(r + 1)
-
-                cols.remove(c)
-                negDiag.remove(r - c)
-                posDiag.remove(r + c)
-                path[r][c] = "."
+                cols[j] = False
+                posDiag[i + j] = False
+                negDiag[i - j] = False
+                board[i][j] = "."
         
-        backtrack(0)
-        return results
+        backtrack(0, board)
+        return ans
