@@ -6,33 +6,23 @@
 #         self.right = right
 class Solution:
     def maxSumBST(self, root: Optional[TreeNode]) -> int:
-        bigVal = 5 * (10**4)
-        ans = 0
+        self.ans = 0
 
-        # [isBST, subtree_min, subtree_max, subtree_sum]
-        def backtrack(node):
-            nonlocal ans
+        def sum(node):
             if not node:
-                return [True, bigVal, -bigVal, 0]
-            
-            left = backtrack(node.left)
-            right = backtrack(node.right)
-            
-            curr = [True]
+                return [True, 0, float("inf"), float("-inf")]
 
-            if node.val > left[2] and node.val < right[1]:
-                curr[0] = left[0] and right[0]
-            else:
-                curr[0] = False
-            
-            curr.append(min(left[1], node.val))
-            curr.append(max(right[2], node.val))
-            curr.append(left[3] + right[3] + node.val)
-            
-            if curr[0]:
-                ans = max(ans, curr[3])
+            left = sum(node.left)
+            right = sum(node.right)
 
-            return curr
+            if left[0] and right[0] and node.val > left[3] and node.val < right[2]:
+                sum_ = left[1] + right[1] + node.val
+                self.ans = max(self.ans, sum_)
+                return [True, sum_, min(left[2], node.val), max(right[3], node.val)]
             
-        backtrack(root)
-        return ans
+            return [False, max(left[1], right[1])]
+            
+
+        sum(root)
+        return self.ans
+        
