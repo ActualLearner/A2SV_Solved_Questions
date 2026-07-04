@@ -1,32 +1,32 @@
 class Solution:
     def totalNQueens(self, n: int) -> int:
         ans = 0
-        cols = [False for _ in range(n)]
-        posDiag = [False for _ in range(2*n)]
-        negDiag = [False for _ in range(2*n)]
+        cols = [False] * n
+        posDiag = [False] * (2*n - 1)
+        negDiag = [False] * (2*n - 1)
 
-        def place(r):
+        def backtrack(i):
             nonlocal ans
-            nonlocal cols
-            nonlocal posDiag
-            nonlocal negDiag
 
-            if r == n:
-                ans += (1 if cols.count(True) == n else 0)
-                return
+            if i == n:
+                return 1
             
-            for idx in range(n):
-                if cols[idx] or posDiag[r + idx] or negDiag[r - idx]:
+            count = 0
+            
+            for j in range(n):
+                if cols[j] or posDiag[i + j] or negDiag[i - j]:
                     continue
-                    
-                cols[idx] = True
-                posDiag[r + idx] = True
-                negDiag[r - idx] = True
                 
-                place(r + 1)
-                cols[idx] = False
-                posDiag[r + idx] = False
-                negDiag[r - idx] = False
+                cols[j] = True
+                posDiag[i + j] = True
+                negDiag[i - j] = True
 
-        place(0)
-        return ans
+                count += backtrack(i + 1)
+
+                cols[j] = False
+                posDiag[i + j] = False
+                negDiag[i - j] = False
+            
+            return count
+        
+        return backtrack(0)
