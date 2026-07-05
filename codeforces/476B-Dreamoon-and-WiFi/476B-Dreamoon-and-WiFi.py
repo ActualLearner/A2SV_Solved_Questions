@@ -1,31 +1,27 @@
-import sys
-input = sys.stdin.readline
-s1 = list(input().strip())
-s2 = list(input().strip())
-n = len(s2)
+def solve():
+    s1 = input().strip()
+    s2 = input().strip()
+    N = len(s1)
+    final_pos = 0
+    paths = 2 ** s2.count("?")
 
-sum_ = 0
-for char in s1:
-    sum_ += (1 if char == "+" else -1)
+    for char in s1:
+        if char == "+":
+            final_pos += 1
+        else:
+            final_pos -= 1
 
-count = 0
-total_count = 0
-def backtrack(pos, index):
-    global total_count
-    global count
-    if index == n:
-        total_count += 1
-        count += (1 if pos == sum_ else 0)
-        return
+    def explore(i, curr):
+        if i == N:
+            return 1 if curr == final_pos else 0
 
-    if s2[index] == "?":
-        pos += 1
-        backtrack(pos, index + 1)
-        pos -= 2
-        backtrack(pos, index + 1)
-    else:
-        pos += (1 if s2[index] == "+" else -1)
-        backtrack(pos, index + 1)
+        if s2[i] == "?":
+            return explore(i + 1, curr + 1) + explore(i + 1, curr - 1)
+        elif s2[i] == "+":
+            return explore(i + 1, curr + 1)
+        else:
+            return explore(i + 1, curr - 1)
 
-backtrack(0, 0)
-sys.stdout.write(str(count / total_count))
+    print(explore(0, 0) / paths)
+
+solve()
